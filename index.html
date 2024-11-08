@@ -96,8 +96,6 @@
             <button onclick="checkLetter()">Tentar</button>
         </div>
 
-        <button onclick="resetGame()">Trocar Palavra</button>
-
         <div id="attempts">Tentativas restantes: 6</div>
         <div id="message"></div>
 
@@ -182,6 +180,7 @@
             const display = currentWord.split("").every(letter => guessedLetters.includes(letter));
             if (display) {
                 document.getElementById("message").textContent = "Parabéns! Você acertou a palavra!";
+                setTimeout(startGame, 2000); // Troca automaticamente de palavra após 2 segundos
             }
         }
 
@@ -189,13 +188,8 @@
         function checkLose() {
             if (attempts <= 0) {
                 document.getElementById("message").textContent = `Você perdeu! A palavra era "${currentWord}".`;
-                document.getElementById("wordDisplay").textContent = currentWord.split("").join(" ");
+                setTimeout(startGame, 2000); // Troca automaticamente de palavra após 2 segundos
             }
-        }
-
-        // Reinicia o jogo com uma nova palavra
-        function resetGame() {
-            startGame();
         }
 
         // Inicializa o jogo na primeira vez
