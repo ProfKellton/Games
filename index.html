@@ -102,7 +102,7 @@
         <div id="message"></div>
 
         <!-- Imagem da Forca -->
-        <img id="hangmanImage" src="imagensForca/forca0.png" alt="Forca">
+        <img id="hangmanImage" src="forca0.png" alt="Forca">
     </div>
 
     <script>
@@ -143,7 +143,7 @@
             updateWordDisplay();
             document.getElementById("attempts").textContent = `Tentativas restantes: ${attempts}`;
             document.getElementById("message").textContent = "";
-            document.getElementById("hangmanImage").src = `imagensForca/forca${attempts}.png`;  // Usando a pasta imagens
+            document.getElementById("hangmanImage").src = `forca${attempts}.png`;  // Usando a pasta imagens
         }
 
         // Atualiza o display da palavra com as letras adivinhadas
@@ -174,7 +174,7 @@
 
         // Atualiza a imagem da forca com base nas tentativas restantes
         function updateHangmanImage() {
-            document.getElementById("hangmanImage").src = `imagensForca/forca${attempts}.png`;  // Carregar imagem da pasta
+            document.getElementById("hangmanImage").src = `forca${attempts}.png`;  // Carregar imagem da pasta
         }
 
         // Verifica se o jogador ganhou
