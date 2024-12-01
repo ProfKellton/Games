@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Hub</title>
+    <style>
+        /* Reset básico */
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container principal */
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Títulos */
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #c0c0c0;
+        }
+
+        /* Botões */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: white;
+            background: #00d4ff;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 212, 255, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 8px 25px rgba(0, 212, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🎮 Games Hub</h1>
+        <p class="subtitle">Escolha o jogo que deseja acessar:</p>
+        <div class="button-container">
+            <a href="game1.html" class="button">Jogo 1</a>
+            <a href="game2.html" class="button">Jogo 2</a>
+            <a href="game3.html" class="button">Jogo 3</a>
+            <a href="game4.html" class="button">Jogo 4</a>
+        </div>
+    </div>
+</body>
+</html>
