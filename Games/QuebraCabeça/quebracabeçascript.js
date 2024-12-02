@@ -4,54 +4,54 @@ let emptyIndex = 8; // Índice do espaço vazio (inicia na última posição)
 // Lista de conjuntos de imagens para diferentes quebra-cabeças
 const puzzles = [
     [
-        'imagensG/PraiaParte1.png',  
-        'imagensG/PraiaParte2.png',
-        'imagensG/PraiaParte3.png',
-        'imagensG/PraiaParte4.png',
-        'imagensG/PraiaParte5.png',
-        'imagensG/PraiaParte6.png',
-        'imagensG/PraiaParte7.png',
-        'imagensG/PraiaParte8.png'
+        '/Games/imagensG/imagensQuebraCabeca/PraiaParte1.png',  
+        '/Games/imagensG/imagensQuebraCabeca/PraiaParte2.png',
+        '/Games/imagensG/imagensQuebraCabeca/PraiaParte3.png',
+        '/Games/imagensG/imagensQuebraCabeca/PraiaParte4.png',
+        '/Games/imagensG/imagensQuebraCabeca/PraiaParte5.png',
+        '/Games/imagensG/imagensQuebraCabeca/PraiaParte6.png',
+        '/Games/imagensG/imagensQuebraCabeca/PraiaParte7.png',
+        '/Games/imagensG/imagensQuebraCabeca/PraiaParte8.png'
     ],
     [
-        'imagensG/cenario2Parte1.png',  
-        'imagensG/cenario2Parte2.png',  
-        'imagensG/cenario2Parte3.png',  
-        'imagensG/cenario2Parte4.png',  
-        'imagensG/cenario2Parte5.png',  
-        'imagensG/cenario2Parte6.png',  
-        'imagensG/cenario2Parte7.png',  
-        'imagensG/cenario2Parte8.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario2Parte1.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario2Parte2.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario2Parte3.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario2Parte4.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario2Parte5.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario2Parte6.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario2Parte7.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario2Parte8.png',  
     ],
     [
-        'imagensG/cenario3Parte1.png',  
-        'imagensG/cenario3Parte2.png',  
-        'imagensG/cenario3Parte3.png',  
-        'imagensG/cenario3Parte4.png',  
-        'imagensG/cenario3Parte5.png',  
-        'imagensG/cenario3Parte6.png',  
-        'imagensG/cenario3Parte7.png',  
-        'imagensG/cenario3Parte8.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario3Parte1.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario3Parte2.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario3Parte3.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario3Parte4.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario3Parte5.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario3Parte6.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario3Parte7.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenario3Parte8.png',  
     ],
     [
-        'imagensG/cenarioGameParte1.png',  
-        'imagensG/cenarioGameParte2.png',  
-        'imagensG/cenarioGameParte3.png',  
-        'imagensG/cenarioGameParte4.png',  
-        'imagensG/cenarioGameParte5.png',  
-        'imagensG/cenarioGameParte6.png',  
-        'imagensG/cenarioGameParte7.png',  
-        'imagensG/cenarioGameParte8.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGameParte1.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGameParte2.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGameParte3.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGameParte4.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGameParte5.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGameParte6.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGameParte7.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGameParte8.png',  
     ],
     [
-        'imagensG/cenarioGame3Parte1.png',  
-        'imagensG/cenarioGame3Parte2.png',  
-        'imagensG/cenarioGame3Parte3.png',  
-        'imagensG/cenarioGame3Parte4.png',  
-        'imagensG/cenarioGame3Parte5.png',  
-        'imagensG/cenarioGame3Parte6.png',  
-        'imagensG/cenarioGame3Parte7.png',  
-        'imagensG/cenarioGame3Parte8.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGame3Parte1.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGame3Parte2.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGame3Parte3.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGame3Parte4.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGame3Parte5.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGame3Parte6.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGame3Parte7.png',  
+        '/Games/imagensG/imagensQuebraCabeca/cenarioGame3Parte8.png',  
     ]
 ];
 
@@ -146,3 +146,12 @@ function swapPieces(index) {
 }
 
 init();
+
+
+//Menu Animado
+
+let toggleBtn = document.querySelector('.toggleBtn');
+        let menu = document.querySelector('.menu');
+        toggleBtn.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });

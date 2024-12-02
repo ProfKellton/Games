@@ -20,37 +20,86 @@ header {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Navegação */
-nav {
-    background-color: #3b506f;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+/* Menu animado */
+
+.menu {
+    position: fixed;
+    bottom: 20px; /* Distância da borda inferior */
+    left: 20px;   /* Distância da borda esquerda */
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
 }
 
-nav ul {
+
+.menu.active {
+    width: 400px;
+    height: 400px;
+}
+.menu li {
+    position: absolute;
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    text-align: center;
+    transform: translate(0, 0) scale(0);
+    transition: 0.5s;
+    opacity: 0;
+    width: 60px;
+    height: 60px;
+}
+.menu.active li {
+    transform: translate(var(--x), var(--y)) scale(1);
+    opacity: 1;
+    transition-delay: calc(0.1s * var(--i));
+}
+.menu .toggleBtn {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: #2f363e;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 2em;
+    transition: 0.5s;
+}
+.menu .toggleBtn:hover {
+    background: #4a5260;
+}
+.menu.active .toggleBtn {
+    transform: rotate(315deg);
+}
+.menu li a {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    border: 2px solid var(--clr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    border-radius: 50%;
+    font-size: 1.5em;
+    transition: 0.5s;
+    color: var(--clr);
+    
 }
 
-nav ul li {
-    display: inline-block;
-    margin: 0 15px;
+.menu li a:hover {
+    color: #fff;
+    background: var(--clr);
+    box-shadow: 0 0 10px var(--clr),
+    0 0 30px var(--clr),
+    0 0 50px var(--clr);
 }
 
-nav ul li a {
-    color: #ffffff;
-    padding: 14px 20px;
-    text-decoration: none;
-    display: inline-block;
-    font-weight: bold;
-    transition: color 0.3s ease, background-color 0.3s ease;
-}
-
-nav ul li a:hover {
-    background-color: #64748b;
-    color: #e0e7ff;
-}
 
 /* Conteúdo Principal */
 main {

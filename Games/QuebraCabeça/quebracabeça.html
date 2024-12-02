@@ -5,21 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quebra-Cabeça</title>
     <link rel="stylesheet" href="stylesquebracabeça.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
     <!-- Menu de Navegação -->
     <header>
         <h1>Cursos do professor Kellton Rodrigo</h1>
     </header>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#sobre">Sobre</a></li>
-            <li><a href="index.html#cursos">Cursos</a></li>
-            <li><a href="index.html#contato">Contato</a></li>
-            <li><a href="index.html#jogos">Jogos</a></li>
-        </ul>
-    </nav>
 
     <!-- Conteúdo Principal -->
     <main>
@@ -49,8 +42,24 @@
         </div>
     </main>
 
+
+        <!--Menu Animado-->
+    <ul class="menu">
+        <div class="toggleBtn">
+            <ion-icon name="add-outline"></ion-icon>
+        </div>
+        <li style="--i:0; --x:-150px; --y:0px; --clr: rgb(183, 255, 0);"><a href="#"><ion-icon name="person-outline"></ion-icon></a></li>
+        <li style="--i:1; --x:150px; --y:0px; --clr: rgb(255, 174, 0); "><a href="#"><ion-icon name="code-slash-outline"></ion-icon></a></li>
+        <li style="--i:2; --x:0px; --y:-150px;  --clr: rgb(43, 255, 0);  "><a href="#"><ion-icon name="flower-outline"></ion-icon></a></li>
+        <li style="--i:3; --x:105px; --y:105px; --clr: rgb(255, 0, 43); "><a href="#"><ion-icon name="image-outline"></ion-icon></a></li>
+        <li style="--i:4; --x:-105px; --y:-105px; --clr: rgb(0, 255, 187);"><a href="#"><ion-icon name="navigate-outline"></ion-icon></a></li>
+        <li style="--i:5; --x:0px; --y:150px; --clr: rgb(0, 153, 255);"><a href="#"><ion-icon name="mail-unread-outline"></ion-icon></a></li>
+        <li style="--i:6; --x:105px; --y:-105px; --clr: rgb(185, 100, 255);"><a href="#"><ion-icon name="laptop-outline"></ion-icon></a></li>
+        <li style="--i:7; --x:-105px; --y:105px; --clr: rgb(255, 0, 200);" ><a href="#"><ion-icon name="notifications-outline"></ion-icon></a></li>
+    </ul>
+
     <footer>
-        <p>&copy; 2024 Cursos do Professor Kellton Rodrigo. Todos os direitos reservados.</p>
+        <p>&copy; 2024 Jogo de Quebra-Cabeça. Todos os direitos reservados.</p>
     </footer>
 
     <script src="quebracabeçascript.js"></script>

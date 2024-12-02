@@ -1,12 +1,12 @@
 const cardImages = [
-    'imagensG/laptop.png',
-    'imagensG/computador.png',
-    'imagensG/gabinete.png',
-    'imagensG/headset.png',
-    'imagensG/mouse.png',
-    'imagensG/caixadesom2.png',
-    'imagensG/Impressora.png',
-    'imagensG/teclado.png'
+    '/Games/imagensG/imagensMemoria/laptop.png',
+    '/Games/imagensG/imagensMemoria/computador.png',
+    '/Games/imagensG/imagensMemoria/gabinete.png',
+    '/Games/imagensG/imagensMemoria/headset.png',
+    '/Games/imagensG/imagensMemoria/mouse.png',
+    '/Games/imagensG/imagensMemoria/caixadesom2.png',
+    '/Games/imagensG/imagensMemoria/Impressora.png',
+    '/Games/imagensG/imagensMemoria/teclado.png'
 ];
 
 let cardArray = [...cardImages, ...cardImages]; // Duplicar as imagens
@@ -65,3 +65,13 @@ document.getElementById('restart').addEventListener('click', () => {
 });
 
 createBoard();
+
+
+
+/* Menu Animado */
+
+let toggleBtn = document.querySelector('.toggleBtn');
+        let menu = document.querySelector('.menu');
+        toggleBtn.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });

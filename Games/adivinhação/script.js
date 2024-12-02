@@ -68,3 +68,11 @@ guessInput.addEventListener('keydown', (event) => {
 restartButton.addEventListener('click', startGame);
 
 startGame();
+
+
+
+let toggleBtn = document.querySelector('.toggleBtn');
+        let menu = document.querySelector('.menu');
+        toggleBtn.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
