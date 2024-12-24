@@ -1,75 +1,123 @@
-const guessInput = document.getElementById('guessInput');
-const checkButton = document.getElementById('checkButton');
-const message = document.getElementById('message');
-const result = document.getElementById('result');
-const restartButton = document.getElementById('restartButton');
-const difficultySelect = document.getElementById('difficulty');
-const successSound = document.getElementById('successSound');
-const errorSound = document.getElementById('errorSound');
-const clickSound = document.getElementById('clickSound');
-
-let randomNumber;
-let maxRange = 100;
-let attempts = 0;
-
-const startGame = () => {
-    maxRange = parseInt(difficultySelect.value);
-    randomNumber = Math.floor(Math.random() * maxRange) + 1;
-    attempts = 0;
-    guessInput.value = '';
-    guessInput.disabled = false;
-    checkButton.disabled = false;
-    message.textContent = '';
-    result.textContent = '';
-    restartButton.classList.add('hidden');
+// Tabelas de classificação
+const leaderboards = {
+    easy: [],
+    medium: [],
+    hard: []
 };
 
-difficultySelect.addEventListener('change', startGame);
+const maxLeaderboardSize = 7;
+let randomNumber = null;
+let attempts = 0;
 
-const checkGuess = () => {
-    const userGuess = Number(guessInput.value);
-    attempts++;
-    clickSound.play();
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => {
+    loadLeaderboards();
+    initializeGame();
+    updateAllLeaderboardsUI();
 
-    if (userGuess < 1 || userGuess > maxRange || isNaN(userGuess)) {
-        message.textContent = `Por favor, insira um número válido entre 1 e ${maxRange}.`;
-        message.style.color = 'red';
-        errorSound.play();
+    document.getElementById('checkButton').addEventListener('click', checkGuess);
+    document.getElementById('restartButton').addEventListener('click', initializeGame);
+    document.getElementById('difficulty').addEventListener('change', initializeGame);
+});
+
+function initializeGame() {
+    const difficulty = parseInt(document.getElementById('difficulty').value);
+    randomNumber = Math.floor(Math.random() * difficulty) + 1;
+    attempts = 0;
+
+    document.getElementById('guessInput').value = '';
+    document.getElementById('message').textContent = '';
+    document.getElementById('result').textContent = '';
+    document.getElementById('restartButton').classList.add('hidden');
+    document.getElementById('checkButton').disabled = false;
+    document.getElementById('guessInput').disabled = false;
+}
+
+function checkGuess() {
+    const userGuess = parseInt(document.getElementById('guessInput').value);
+    const difficulty = getSelectedDifficulty();
+
+    if (isNaN(userGuess)) {
+        document.getElementById('message').textContent = "Por favor, insira um número válido.";
         return;
     }
 
+    attempts++;
+
     if (userGuess === randomNumber) {
-        result.textContent = `🎉 Parabéns! Você acertou o número ${randomNumber} em ${attempts} tentativas.`;
-        result.style.color = '#388e3c';
-        message.textContent = '';
-        successSound.play();
-        checkButton.disabled = true;
-        guessInput.disabled = true;
-        restartButton.classList.remove('hidden');
+        document.getElementById('result').textContent = `🎉 Você acertou o número em ${attempts} tentativas!`;
+        document.getElementById('checkButton').disabled = true;
+        document.getElementById('guessInput').disabled = true;
+        document.getElementById('restartButton').classList.remove('hidden');
+
+        const playerName = prompt("Parabéns! Insira seu nome (exatamente 3 caracteres):");
+        if (playerName && playerName.length === 3) {
+            addToLeaderboard(difficulty, playerName, attempts);
+        } else {
+            alert("Nome inválido! Deve conter exatamente 3 caracteres.");
+        }
     } else if (userGuess < randomNumber) {
-        message.textContent = "Tente um número maior! 📈";
-        message.style.color = '#1976d2';
-        errorSound.play();
+        document.getElementById('message').textContent = "Tente um número maior! 📈";
     } else {
-        message.textContent = "Tente um número menor! 📉";
-        message.style.color = '#d32f2f';
-        errorSound.play();
+        document.getElementById('message').textContent = "Tente um número menor! 📉";
     }
-};
+}
 
-checkButton.addEventListener('click', checkGuess);
+function getSelectedDifficulty() {
+    const difficultySelect = document.getElementById('difficulty').value;
+    return difficultySelect === "50" ? "easy" :
+           difficultySelect === "100" ? "medium" : "hard";
+}
 
-guessInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        checkGuess();
+function addToLeaderboard(difficulty, playerName, attempts) {
+    const leaderboard = leaderboards[difficulty];
+    const lowestScore = leaderboard[leaderboard.length - 1]?.attempts || Infinity;
+
+    if (leaderboard.length < maxLeaderboardSize || attempts < lowestScore) {
+        leaderboard.push({ name: playerName, attempts });
+        leaderboard.sort((a, b) => a.attempts - b.attempts);
+
+        if (leaderboard.length > maxLeaderboardSize) {
+            leaderboard.pop();
+        }
+
+        saveLeaderboards();
+        updateLeaderboardUI(difficulty);
     }
-});
+}
 
-restartButton.addEventListener('click', startGame);
+function saveLeaderboards() {
+    localStorage.setItem('leaderboards', JSON.stringify(leaderboards));
+}
 
-startGame();
+function loadLeaderboards() {
+    const savedLeaderboards = localStorage.getItem('leaderboards');
+    if (savedLeaderboards) {
+        const parsedLeaderboards = JSON.parse(savedLeaderboards);
+        Object.keys(parsedLeaderboards).forEach(difficulty => {
+            leaderboards[difficulty] = parsedLeaderboards[difficulty];
+        });
+    }
+}
+
+function updateLeaderboardUI(difficulty) {
+    const leaderboard = leaderboards[difficulty];
+    const leaderboardElement = document.getElementById(`leaderboard-${difficulty}`);
+    leaderboardElement.innerHTML = '';
+
+    leaderboard.forEach((entry, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${index + 1}° ${entry.name}</span> <span>${entry.attempts} tentativas</span>`;
+        leaderboardElement.appendChild(li);
+    });
+}
+
+function updateAllLeaderboardsUI() {
+    ['easy', 'medium', 'hard'].forEach(updateLeaderboardUI);
+}
 
 
+/* Menu Animado */
 
 let toggleBtn = document.querySelector('.toggleBtn');
         let menu = document.querySelector('.menu');

@@ -4,11 +4,12 @@ body {
     padding: 0;
     background: linear-gradient(to bottom, #8ec5fc, #e0c3fc);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
     color: #333;
 }
+
 
 /* Menu Animado */
 
@@ -92,77 +93,71 @@ body {
 
 
 
-
-
 .game-container {
     background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     padding: 20px;
     width: 90%;
     max-width: 400px;
+    margin-bottom: 20px;
 }
 
 h1 {
-    font-size: 2rem;
-    color: #6a1b9a;
+    font-size: 1.8rem;
+    color: #333;
 }
 
-select {
-    margin: 10px 0;
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 2px solid #6a1b9a;
-}
-
-input {
+select,
+input,
+button {
     width: 80%;
     padding: 10px;
     margin: 10px 0;
-    border: 2px solid #6a1b9a;
     border-radius: 5px;
+    border: 2px solid #0073e6;
     font-size: 1rem;
 }
 
 button {
-    background: #6a1b9a;
+    background: #0073e6;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
 }
 
 button:hover {
-    background: #7e57c2;
+    background: #005bb5;
 }
 
 .hidden {
     display: none;
 }
 
-#message {
-    font-size: 1.2rem;
-    margin: 10px 0;
+.classification-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 800px;
+    gap: 10px;
 }
 
-#result {
-    font-size: 1.5rem;
-    color: #388e3c;
-    margin-top: 10px;
-    animation: fadeIn 1s ease-in-out;
+.classification-container > div {
+    flex: 1;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
 }
