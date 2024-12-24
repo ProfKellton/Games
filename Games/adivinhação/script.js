@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('checkButton').addEventListener('click', checkGuess);
     document.getElementById('restartButton').addEventListener('click', initializeGame);
     document.getElementById('difficulty').addEventListener('change', initializeGame);
+
+    // Adiciona suporte para a tecla Enter
+    document.getElementById('guessInput').addEventListener('keydown', (event) => {
+        if (event.key === "Enter") {
+            checkGuess();
+        }
+    });
 });
 
 function initializeGame() {
@@ -117,9 +124,10 @@ function updateAllLeaderboardsUI() {
 }
 
 
-/* Menu Animado */
 
-let toggleBtn = document.querySelector('.toggleBtn');
+  /* Menu Animado */
+
+  let toggleBtn = document.querySelector('.toggleBtn');
         let menu = document.querySelector('.menu');
         toggleBtn.addEventListener('click', () => {
             menu.classList.toggle('active');
