@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fase Estilo Hollow Knight</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #0c0c0c;
+      font-family: sans-serif;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(#1b1b2f, #1f4068);
+      overflow: hidden;
+    }
+
+    .player {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      animation: idle 0.4s infinite alternate;
+    }
+
+    @keyframes idle {
+      from { transform: translateY(0); }
+      to { transform: translateY(-3px); }
+    }
+
+    .player img {
+      width: 100%;
+      height: auto;
+    }
+
+    .platform {
+      position: absolute;
+      width: 200px;
+      height: 20px;
+      background: #555;
+      border-radius: 5px;
+    }
+
+    .enemy {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      animation: idle 0.4s infinite alternate;
+    }
+
+    .enemy img {
+      width: 100%;
+      height: auto;
+    }
+
+    .attack {
+      position: absolute;
+      width: 30px;
+      height: 10px;
+      background: yellow;
+      border-radius: 3px;
+      z-index: 2;
+    }
+
+    #hud {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: white;
+    }
+
+    #death-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      color: red;
+      display: none;
+    }
+
+    #restart-button {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: #333;
+      color: white;
+      border: none;
+      font-size: 20px;
+      display: none;
+      cursor: pointer;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="hud">Vida: <span id="vida">100</span></div>
+    <div id="death-message">VOCÊ MORREU</div>
+    <button id="restart-button">Tentar Novamente</button>
+    <div class="player" id="player">
+      <img src="player_sprite.png" alt="Player">
+    </div>
+    <div class="platform" style="bottom: 50px; left: 0;"></div>
+    <div class="platform" style="bottom: 200px; left: 300px;"></div>
+    <div class="platform" style="bottom: 350px; left: 600px;"></div>
+    <audio id="bgm" src="sua_musica.mp3" autoplay loop></audio>
+  </div>
+
+  <script>
+    const player = document.getElementById('player');
+    const vidaDisplay = document.getElementById('vida');
+    const deathMessage = document.getElementById('death-message');
+    const restartButton = document.getElementById('restart-button');
+    const container = document.getElementById('game-container');
+    const platforms = Array.from(document.getElementsByClassName('platform'));
+
+    const state = {
+      x: 100,
+      y: 100,
+      vx: 0,
+      vy: 0,
+      gravity: 0.5,
+      jumping: false,
+      speed: 5,
+      jumpPower: -10,
+      vida: 100,
+      facing: 1,
+      attacking: false,
+      morto: false,
+      cameraOffsetX: 0
+    };
+
+    const keys = {
+      left: false,
+      right: false,
+      up: false,
+      attack: false
+    };
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') keys.left = true;
+      if (e.key === 'ArrowRight') keys.right = true;
+      if (e.key === ' ' || e.key === 'ArrowUp') keys.up = true;
+      if (e.key === 'z') keys.attack = true;
+    });
+
+    document.addEventListener('keyup', e => {
+      if (e.key === 'ArrowLeft') keys.left = false;
+      if (e.key === 'ArrowRight') keys.right = false;
+      if (e.key === ' ' || e.key === 'ArrowUp') keys.up = false;
+      if (e.key === 'z') keys.attack = false;
+    });
+
+    function checkCollision(a, b) {
+      const ab = a.getBoundingClientRect();
+      const bb = b.getBoundingClientRect();
+      return ab.left < bb.right && ab.right > bb.left && ab.top < bb.bottom && ab.bottom > bb.top;
+    }
+
+    function restartGame() {
+      state.vida = 100;
+      vidaDisplay.textContent = state.vida;
+      state.morto = false;
+      state.x = 100;
+      state.y = 100;
+      deathMessage.style.display = 'none';
+      restartButton.style.display = 'none';
+
+      document.querySelectorAll('.enemy').forEach(e => e.remove());
+      spawnEnemy(350, 60);
+      spawnEnemy(650, 360);
+    }
+
+    restartButton.addEventListener('click', restartGame);
+
+    function spawnEnemy(x, y) {
+      const enemy = document.createElement('div');
+      enemy.className = 'enemy';
+      enemy.style.bottom = y + 'px';
+      enemy.style.left = x + 'px';
+      const img = document.createElement('img');
+      img.src = 'enemy_sprite.png';
+      img.alt = 'Inimigo';
+      enemy.appendChild(img);
+      container.appendChild(enemy);
+    }
+
+    function gameLoop() {
+      if (state.morto) return;
+
+      if (keys.left) {
+        state.vx = -state.speed;
+        state.facing = -1;
+      } else if (keys.right) {
+        state.vx = state.speed;
+        state.facing = 1;
+      } else {
+        state.vx = 0;
+      }
+
+      if (keys.up && !state.jumping) {
+        state.vy = state.jumpPower;
+        state.jumping = true;
+      }
+
+      state.vy += state.gravity;
+      state.x += state.vx;
+      state.y += state.vy;
+
+      let onGround = false;
+      platforms.forEach(platform => {
+        if (checkCollision(player, platform)) {
+          const pb = platform.getBoundingClientRect();
+          const pl = player.getBoundingClientRect();
+          if (pl.bottom <= pb.top + 10 && state.vy >= 0) {
+            state.y = pb.top - pl.height;
+            state.vy = 0;
+            state.jumping = false;
+            onGround = true;
+          }
+        }
+      });
+
+      if (state.y > window.innerHeight - 100) {
+        state.y = window.innerHeight - 100;
+        state.vy = 0;
+        state.jumping = false;
+      }
+
+      state.cameraOffsetX = state.x - window.innerWidth / 2;
+      container.scrollLeft = state.cameraOffsetX;
+
+      player.style.left = state.x + 'px';
+      player.style.top = state.y + 'px';
+      player.style.transform = `scaleX(${state.facing})`;
+
+      if (keys.attack && !state.attacking) {
+        state.attacking = true;
+        const attack = document.createElement('div');
+        attack.className = 'attack';
+        attack.style.top = state.y + 20 + 'px';
+        attack.style.left = (state.x + (state.facing > 0 ? 50 : -30)) + 'px';
+        container.appendChild(attack);
+
+        const currentEnemies = Array.from(document.getElementsByClassName('enemy'));
+        currentEnemies.forEach(enemy => {
+          if (checkCollision(attack, enemy)) {
+            enemy.remove();
+            state.vida += 10;
+            if (state.vida > 100) state.vida = 100;
+            vidaDisplay.textContent = state.vida;
+          }
+        });
+
+        setTimeout(() => {
+          attack.remove();
+          state.attacking = false;
+        }, 150);
+      }
+
+      const currentEnemies = Array.from(document.getElementsByClassName('enemy'));
+      currentEnemies.forEach(enemy => {
+        if (checkCollision(player, enemy)) {
+          state.vida -= 1;
+          vidaDisplay.textContent = state.vida;
+          if (state.vida <= 0) {
+            state.vida = 0;
+            vidaDisplay.textContent = 0;
+            deathMessage.style.display = 'block';
+            restartButton.style.display = 'block';
+            state.morto = true;
+          }
+        }
+      });
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    spawnEnemy(350, 60);
+    spawnEnemy(650, 360);
+
+    gameLoop();
+  </script>
+</body>
+</html>
